@@ -15,29 +15,204 @@ El propósito del ADD y por lo que se caracteríza, es proporcionar una guía pa
 ## 2. ¿Cómo se relaciona ADD con Clean Architecture en el proceso de diseño de sistemas?
 * Ambas metodologías son eficaces para el desarrollo de proyectos grandes y complejos además de que promueven la separación de intereses y la creación de sistemas modulares y escalables:
 
-1. Alineación con el Negocio e Independencia Tecnológica:
-Mientras que ADD garantiza que el software esté profundamente alineado con el dominio del negocio, la Arquitectura Limpia garantiza que esta alineación no dependa de tecnologías específicas.
-
-2. Reducción de la Complejidad y Modularidad
-ADD ayuda a descomponer la complejidad en componentes manejables como entidades, objetos de valor y agregados. Después, al aplicar La Arquitectura Limpia se organizan estos componentes en capas diferenciadas, cada una con responsabilidades claras, lo que aumenta aún más la modularidad y la facilidad de mantenimiento del sistema.
-
-3. Flexibilidad y Evolución Continua
-Ambos enfoques facilitan la adaptación a los cambios. Empezando por ADD, se permite que el modelo de dominio evolucione a medida que cambia el negocio, mientras que la Arquitectura Limpia garantiza que estos cambios se puedan implementar sin necesidad de refactorizar otras partes del sistema.
-
-4. Comunicación y Capacidad de Prueba
-El uso de un lenguaje ubicuo en ADD mejora la comunicación entre desarrolladores y expertos, mientras que la Arquitectura Limpia, con sus capas independientes, facilita la creación de pruebas unitarias y de integración, garantizando que el sistema funcione según lo previsto.
+| Relación                                                               | Explicación                                                                                                                                                                                  |
+| ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Complementarios**                                                    | ADD es un *proceso de diseño*, mientras que Clean Architecture es una *estructura resultado* del diseño, por lo que se puede usar ADD para decidir si Clean Architecture es adecuada para tu sistema. |
+| **ADD puede derivar en Clean Architecture**                            | Si al usar ADD se identifican necesidades como mantenibilidad, testabilidad, independencia de frameworks, entonces *Clean Architecture es una opción natural*.                             |
+| **Clean Architecture satisface atributos que ADD ayuda a identificar** | Si ADD detecta necesidad de desacoplamiento (modificabilidad), Clean Architecture lo logra al invertir dependencias y aislar el dominio.                                                 |
+| **Clean Architecture es una implementación concreta**                  | Es uno de los estilos arquitectónicos (como MVC, hexagonal, etc.) que puede seleccionarse durante el proceso de ADD.                                                                            |
 
 ### Relación clave:
 - Gracias a que ADD proporciona un enfoque basado en calidad para tomar decisiones arquitectónicas, se definen los atributos de calidad que la arquitectura debe cumplir.
 - Por otro lado, la Arquitectura Limpia ayuda con la estructuración del código de manera que haya separación de responsabilidades, ayudando a implementar esos atributos mediante la separación de capas y la inversión de dependencias.
 
 ## 3. ¿Cuáles son los pasos principales del método ADD para definir una arquitectura de software?
-- *Identificar los impulsores de la arquitectura:* Comience por identificar los requisitos funcionales, los atributos de calidad (como rendimiento, modificabilidad y seguridad) y las restricciones que guiarán el diseño de la arquitectura.
 
-- *Descomponer el sistema:* Dividir el sistema en módulos o componentes más pequeños y manejables.
+**Paso 1: Revisar las entradas**
+Se deben analizar los pasos del propósito del diseño, los requisitos funcionales, los escenarios de atributos de calidad, las restricciones y las preocupaciones previas para garantizar la iterabilidad de los pasos 2 a 7.
 
-- *Asignar funcionalidad:* Asignar funcionalidades específicas a diferentes módulos o componentes.
+**Paso 2: Filtrar elementos del sistema**
+Se elige el elemento del sistema que será el foco del proyecto para la iteración de los pasos posteriores.
 
-- *Definir interfaces:* Especificar las interfaces entre los componentes para garantizar que se comuniquen e interactúen correctamente.
+**Paso 3: Elegir uno o más elementos para su refinamiento.**
+Analizamos el elemento seleccionado para descomponerlo y enumeramos las prioridades de los requisitos de las partes interesadas que lo afectan. Se pueden asignar prioridades altas, medias o bajas a cada requisito enumerado.
 
-- *Verificar y perfeccionar la arquitectura:* Verificar continuamente si la arquitectura cumple con los requisitos y realizar los ajustes necesarios.
+**Paso 4: Elegir uno o más conceptos de diseño.**
+Debemos elegir nuestro concepto de diseño, lo que significa seleccionar los principales tipos de elementos y sus relaciones. Se pueden identificar las preocupaciones asociadas con el diseño y los componentes arquitectónicos que tienden a abordar el problema.
+
+**Paso 5: Lista de elementos arquitectónicos.**
+Se seleccionan varios tipos de elementos de software en el paso anterior. A estos elementos se les asignan responsabilidades según su tipo. La responsabilidad de los elementos enumerados se deriva de cada requisito funcional asociado.
+
+**Paso 6: Vista previa del boceto.**
+Los servicios y propiedades requeridos para cada elemento se denominan interfaz y no simplemente una lista de componentes operativos. Las interfaces pueden incluir cualquiera de los siguientes elementos:
+
+| Interfaz | Ejemplo |
+|--------------------|---------------------|
+| **Sintaxis de las operaciones**   | Firma |
+| **Semántica de las operaciones** | Descripción, precondiciones y poscondiciones, restricciones |
+| **Información intercambiada** | Eventos marcados, datos globales |
+| **Requisitos de los atributos de calidad de elementos u operaciones individuales**     | Usar colas para desacoplar pagos, al procesar un pago |
+| **Gestión de errores** | añadir un sistema de monitoreo y alertas, al transferir fondos entre cuentas |
+
+**Paso 7: Análisis del rendimiento**
+En este paso, se analizará el trabajo realizado en los pasos anteriores para evitar repeticiones. En este paso, el arquitecto puede volver al paso 2 y comenzar de nuevo si algo sale fuera de contexto. Si todo funciona según lo previsto, el siguiente paso es proporcionar un nuevo elemento para una nueva iteración, de modo que comience el paso 1.
+
+## 4. ¿Cómo se identifican los atributos de calidad en ADD y por qué son importantes?
+Los atributos de calidad son requisitos no funcionales como usabilidad, confiabilidad, rendimiento y escalabilidad que el sistema debe cumplir. El proceso se da principalmente en las primeras etapas del diseño arquitectónico y se apoya en distintas fuentes:
+
+1. A partir de los escenarios de calidad, donde ADD promueve describir los atributos de calidad como escenarios concretos, con estructura clara.
+
+2. En la revisión de los requerimientos del sistema, se analizan los documentos de requisitos (casos de uso, historias de usuario, criterios de aceptación, restricciones del cliente) para detectar: Necesidades implícitas o explícitas de rendimiento, seguridad, disponibilidad, requisitos regulatorios o normativos (ej. PCI-DSS, HIPAA, ISO 25010).
+
+3. Entrevistas o talleres con stakeholders, para consultar a Usuarios finales, Clientes, Dueños de producto, Equipos técnicos, y priorizar qué atributos son críticos.
+
+4. Con un análisis del contexto y restricciones los factores como el entorno tecnológico (web, móvil, embebido), las condiciones de red, el presupuesto o los tiempos de entrega, el número de usuarios concurrentes se pueden revelar necesidades de rendimiento, escalabilidad o simplicidad en el diseño.
+
+### Ejemplo de atributos de calidad y cómo afectan el diseño:
+| Atributo de calidad           | Escenario concreto                                                                                                        | Impacto en el diseño                                                                                                                                                                      |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Rendimiento (Performance)** | "El sistema debe iniciar una videollamada en menos de 1 segundo el 90% del tiempo."                                       | Usar *WebRTC* para conexión peer-to-peer. Minimizar llamadas al backend en el proceso de conexión. Optimizar la entrega de scripts y recursos (lazy loading, compresión). |
+| **Escalabilidad**             | "Debe soportar hasta 10,000 usuarios concurrentes en diferentes videollamadas sin degradar el servicio."                  | Usar arquitectura basada en *microservicios* y *balanceo de carga*. Escalado automático con Kubernetes. Uso de servidores de medios distribuidos.                       |
+| **Disponibilidad**            | "El servicio debe estar disponible el 99.99% del tiempo."                                                                 | Despliegue multi-región en la nube. Redundancia de servidores y *failover automático*. Monitoreo activo con alertas.                                                      |
+| **Seguridad**                 | "Las videollamadas deben estar cifradas de extremo a extremo."                                                            | Implementar *encriptación E2E con claves temporales*. Control estricto de autenticación (OAuth, tokens JWT). Reglas de firewall y control de acceso granular.             |
+| **Usabilidad**                | "Un nuevo usuario debe poder unirse a una llamada sin instalar software adicional."                                       | Web app basada en navegador sin plugins (WebRTC). Interfaz sencilla con flujos guiados.                                                                                           |
+| **Mantenibilidad**            | "El sistema debe permitir añadir nuevas funcionalidades (como fondos virtuales) sin afectar las llamadas existentes."     | Arquitectura *modular*, con separación de responsabilidades. Aplicación de principios SOLID. Pruebas automatizadas y CI/CD.                                               |
+| **Tolerancia a fallos**       | "Si falla el servidor de videollamada, los usuarios deben ser redirigidos automáticamente a otro sin notar interrupción." | Uso de *circuit breakers*, *reintentos automáticos* y *detección de fallos en tiempo real*. Clustering de servidores de medios.                                             |
+
+## 5. ¿Por qué Clean Architecture complementa ADD en la implementación de una solución?
+Se complementa, porque cada uno aborda una parte distinta del ciclo de diseño y construcción del software, pero ambos se pueden integrar de forma natural para lograr una arquitectura sólida, mantenible y alineada a los atributos de calidad del sistema.
+
+## 6. ¿Qué criterios se deben considerar al definir las capas en Clean Architecture dentro de un proceso ADD?
+* Atributos de calidad: Define capas según los atributos priorizados (rendimiento, seguridad, mantenibilidad, etc.) detectados en ADD.
+
+* Separación de responsabilidades: Cada capa debe tener una única responsabilidad, por ejemplo, entidad (lógica de negocio pura), casos de uso (reglas específicas de aplicación), adaptadores (presentación, persistencia, interfaces externas) y frameworks (detalles tecnológicos (DB, web, etc.)).
+
+* Regla de dependencia
+Las dependencias deben ir siempre hacia el centro (de frameworks a entidades, nunca al revés).
+
+* Cambio controlado
+Define capas para aislar el impacto de cambios, como reemplazar una base de datos sin tocar la lógica de negocio.
+
+* Interfaces explícitas
+Usa interfaces para desacoplar capas y facilitar pruebas, sustitución de componentes, y adaptabilidad.
+
+## 7. ¿Cómo ADD ayuda a tomar decisiones arquitectónicas basadas en necesidades del negocio?
+1. Traduce necesidades del negocio en atributos de calidad. Ejemplo:
+
+Necesidad: “el sistema debe responder rápido”
+Atributo: rendimiento
+Impacto: elegir arquitectura reactiva, caché, balanceo de carga.
+
+2. Prioriza atributos según objetivos del negocio
+ADD obliga a decidir qué atributos (rendimiento, seguridad, escalabilidad, etc.) son más importantes según el contexto empresarial, guiando así las decisiones de diseño.
+
+3. Guía selección de tácticas arquitectónicas
+Para cada atributo, ADD sugiere tácticas específicas:
+
+Seguridad → autenticación, encriptación, validación de entrada.
+Disponibilidad → redundancia, failover, monitoreo.
+
+4. Define estructuras que soporten esos atributos
+ADD ayuda a decidir:
+
+Qué módulos crear.
+Cómo dividir responsabilidades.
+Cómo se comunican los componentes.
+Todo basado en lo que necesita el negocio, no solo en preferencias técnicas.
+
+5. Justifica cada decisión
+Cada elección arquitectónica se basa en un requisito real, no en intuición. Esto facilita comunicar decisiones a stakeholders y justificar inversión técnica.
+
+## 8. ¿Cuáles son los beneficios de combinar ADD con Clean Architecture en un sistema basado en microservicios?
+### Ventajas clave:
+✅ Beneficios clave
+1. Diseño alineado a objetivos del negocio
+ADD garantiza que los microservicios estén diseñados con base en atributos de calidad como escalabilidad, disponibilidad o seguridad.
+
+Clean Architecture permite implementar estos servicios de forma clara, desacoplada y sostenible.
+
+2. Modularidad y responsabilidad clara
+ADD te ayuda a identificar los módulos y límites de los microservicios.
+
+Clean Architecture asegura que cada servicio tenga capas bien definidas (entidades, casos de uso, adaptadores), facilitando mantenimiento y pruebas.
+
+3. Alta mantenibilidad y extensibilidad
+Cambios en reglas de negocio afectan solo la capa central de Clean Architecture.
+
+ADD ayuda a prever y preparar el diseño ante posibles cambios o crecimiento del sistema.
+
+4. Escalabilidad técnica guiada por necesidades reales
+ADD prioriza atributos como rendimiento o capacidad de crecimiento, guiando decisiones como balanceo, particionado de servicios, cachés, etc.
+
+Clean Architecture estructura el código de forma que se puede escalar o migrar con mínimo impacto.
+
+5. Independencia tecnológica
+Clean Architecture desacopla lógica del negocio de frameworks, bases de datos o protocolos.
+
+ADD permite tomar decisiones informadas sobre qué tecnologías usar según los atributos de calidad requeridos.
+
+6. Facilita evolución e innovación
+ADD define desde el inicio cómo se debe comportar el sistema ante cambios.
+
+Clean Architecture lo implementa de forma que esos cambios sean fáciles de introducir sin romper la arquitectura.
+
+7. Mejor comunicación entre técnicos y stakeholders
+ADD traduce objetivos del negocio en requisitos técnicos.
+
+Clean Architecture los implementa con una estructura que puede ser explicada y entendida fácilmente.
+
+## 9. ¿Cómo se asegura que la arquitectura resultante cumpla con los atributos de calidad definidos en ADD?
+1. Escenarios de calidad específicos
+Se definen escenarios concretos por atributo, por ejemplo:
+"El sistema debe responder en menos de 1 segundo para 1000 usuarios concurrentes" → rendimiento
+"Solo usuarios autenticados pueden acceder al historial de órdenes" → seguridad
+Esto permite verificar si el diseño los satisface.
+
+2. Tácticas arquitectónicas alineadas a cada atributo
+ADD recomienda tácticas específicas para cumplir los atributos, por ejemplo:
+Rendimiento → caché, concurrencia, compresión.
+Disponibilidad → balanceo de carga, failover.
+Modificabilidad → separación en capas, inyección de dependencias.
+
+3. Decisiones arquitectónicas documentadas
+Cada decisión se justifica con su atributo asociado. Esto permite:
+Rastrear por qué se tomó una decisión.
+Validar si sigue vigente al cambiar requisitos.
+
+4. Validación continua
+Durante el desarrollo se aplican prácticas como:
+Revisión de arquitectura con checklist por atributo.
+Prototipos o pruebas de concepto (spikes) para atributos críticos (como latencia o escalabilidad).
+Pruebas no funcionales: carga, seguridad, resiliencia, etc.
+
+5. Trazabilidad entre requerimientos y componentes
+Cada componente del sistema (microservicio, módulo, clase) debe poder rastrearse hasta el atributo de calidad que motivó su existencia o forma.
+
+6. Monitoreo en producción
+Una vez desplegado, se usa monitoreo para verificar atributos como:
+Tiempos de respuesta.
+Tasa de errores.
+Uso de CPU/memoria.
+Uptime.
+Esto valida que las decisiones siguen cumpliendo los atributos esperados.
+
+## 10. ¿Qué herramientas o metodologías pueden ayudar a validar una arquitectura diseñada con ADD y Clean Architecture?
+### Herramientas y enfoques útiles:
+1. ATAM (Architecture Tradeoff Analysis Method)
+Metodología formal para evaluar decisiones arquitectónicas en función de atributos de calidad.
+
+Identifica riesgos y trade-offs.
+Valida si la arquitectura satisface los atributos definidos con ADD.
+Muy útil antes o durante el desarrollo.
+
+2. ADRs (Architecture Decision Records)
+Documenta cada decisión arquitectónica con:
+
+Contexto
+Opción elegida
+Motivación (atributo de calidad relacionado)
+Consecuencias
+Ayuda a validar que cada decisión tiene una razón clara y se puede rastrear.
+
+3. Quality Attribute Scenarios
+ADD los promueve: define escenarios concretos para atributos como rendimiento, disponibilidad o seguridad.
