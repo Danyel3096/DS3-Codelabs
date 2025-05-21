@@ -1,2 +1,7 @@
-# Codelabs-DS3
-Repositorio que recopila los codelabs del curso.
+# **DS3-Codelabs**
+
+## Información del estudiante
+
+| Nombre Completo           | Código     |
+|---------------------------|------------|
+| Daniel Melendez Ramirez   | 202313024  |
