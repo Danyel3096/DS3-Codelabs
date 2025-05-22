@@ -3,7 +3,7 @@
 ## 1. ¿Qué es Attribute-Driven Design (ADD) y cuál es su propósito en el Diseño de Software?
 El Diseño Orientado a Atributos (ADD) consiste en una serie de fases a lo largo del desarrollo de un proyecto de software, donde cada ronda de diseño puede tener lugar dentro de un incremento del proyecto, como se hace con el desarrollo de software en un sprint.
 
-El propósito del ADD y por lo que se caracteríza, es proporcionar una guía paso a paso, ordenada y precisa para garantizar que la arquitectura de un sistema cumpla con los requisitos de calidad, si se cumplen con las tareas que deben realizarse durante las iteraciones de diseño.
+El propósito del ADD y por lo que se caracteríza, es proporcionar una guía paso a paso, ordenada y precisa para garantizar que la arquitectura de un sistema cumpla con los requisitos de calidad, siempre que se cumplan las tareas durante las iteraciones de diseño.
 
 ### ¿Qué resuelve ADD?
 - *Enfoque sistemático:* Brinda un método estructurado para diseñar arquitecturas, garantizando que se tengan en cuenta todos los aspectos fundamentales.
@@ -66,9 +66,11 @@ Los atributos de calidad son requisitos no funcionales como usabilidad, confiabi
 
 3. Entrevistas o talleres con stakeholders, para consultar a Usuarios finales, Clientes, Dueños de producto, Equipos técnicos, y priorizar qué atributos son críticos.
 
-4. Con un análisis del contexto y restricciones los factores como el entorno tecnológico (web, móvil, embebido), las condiciones de red, el presupuesto o los tiempos de entrega, el número de usuarios concurrentes se pueden revelar necesidades de rendimiento, escalabilidad o simplicidad en el diseño.
+4. Con un análisis del contexto y restricciones de los factores como el entorno tecnológico (web, móvil, embebido), las condiciones de red, el presupuesto o los tiempos de entrega, el número de usuarios concurrentes se pueden revelar necesidades de rendimiento, escalabilidad o simplicidad en el diseño.
 
 ### Ejemplo de atributos de calidad y cómo afectan el diseño:
+Servicio de videconferencias:
+
 | Atributo de calidad           | Escenario concreto                                                                                                        | Impacto en el diseño                                                                                                                                                                      |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Rendimiento (Performance)** | "El sistema debe iniciar una videollamada en menos de 1 segundo el 90% del tiempo."                                       | Usar *WebRTC* para conexión peer-to-peer. Minimizar llamadas al backend en el proceso de conexión. Optimizar la entrega de scripts y recursos (lazy loading, compresión). |
@@ -83,136 +85,53 @@ Los atributos de calidad son requisitos no funcionales como usabilidad, confiabi
 Se complementa, porque cada uno aborda una parte distinta del ciclo de diseño y construcción del software, pero ambos se pueden integrar de forma natural para lograr una arquitectura sólida, mantenible y alineada a los atributos de calidad del sistema.
 
 ## 6. ¿Qué criterios se deben considerar al definir las capas en Clean Architecture dentro de un proceso ADD?
-* Atributos de calidad: Define capas según los atributos priorizados (rendimiento, seguridad, mantenibilidad, etc.) detectados en ADD.
+* *Atributos de calidad:* Define capas según los atributos priorizados (rendimiento, seguridad, mantenibilidad, etc.) detectados en ADD.
 
-* Separación de responsabilidades: Cada capa debe tener una única responsabilidad, por ejemplo, entidad (lógica de negocio pura), casos de uso (reglas específicas de aplicación), adaptadores (presentación, persistencia, interfaces externas) y frameworks (detalles tecnológicos (DB, web, etc.)).
+* *Separación de responsabilidades:* Cada capa debe tener una única responsabilidad, por ejemplo, entidad (lógica de negocio pura), casos de uso (reglas específicas de aplicación), adaptadores (presentación, persistencia, interfaces externas) y frameworks (detalles tecnológicos (DB, web, etc.)).
 
-* Regla de dependencia
-Las dependencias deben ir siempre hacia el centro (de frameworks a entidades, nunca al revés).
+* *Regla de dependencia:* Las dependencias deben ir siempre hacia el centro (de frameworks a entidades, nunca al revés).
 
-* Cambio controlado
-Define capas para aislar el impacto de cambios, como reemplazar una base de datos sin tocar la lógica de negocio.
+* *Cambio controlado:* Define capas para aislar el impacto de cambios, como reemplazar una base de datos sin tocar la lógica de negocio.
 
-* Interfaces explícitas
-Usa interfaces para desacoplar capas y facilitar pruebas, sustitución de componentes, y adaptabilidad.
+* *Interfaces explícitas:* Usa interfaces para desacoplar capas y facilitar pruebas, sustitución de componentes, y adaptabilidad.
 
 ## 7. ¿Cómo ADD ayuda a tomar decisiones arquitectónicas basadas en necesidades del negocio?
-1. Traduce necesidades del negocio en atributos de calidad. Ejemplo:
-
-Necesidad: “el sistema debe responder rápido”
-Atributo: rendimiento
-Impacto: elegir arquitectura reactiva, caché, balanceo de carga.
-
-2. Prioriza atributos según objetivos del negocio
-ADD obliga a decidir qué atributos (rendimiento, seguridad, escalabilidad, etc.) son más importantes según el contexto empresarial, guiando así las decisiones de diseño.
-
-3. Guía selección de tácticas arquitectónicas
-Para cada atributo, ADD sugiere tácticas específicas:
-
-Seguridad → autenticación, encriptación, validación de entrada.
-Disponibilidad → redundancia, failover, monitoreo.
-
-4. Define estructuras que soporten esos atributos
-ADD ayuda a decidir:
-
-Qué módulos crear.
-Cómo dividir responsabilidades.
-Cómo se comunican los componentes.
-Todo basado en lo que necesita el negocio, no solo en preferencias técnicas.
-
-5. Justifica cada decisión
-Cada elección arquitectónica se basa en un requisito real, no en intuición. Esto facilita comunicar decisiones a stakeholders y justificar inversión técnica.
+ADD se encarga de traducir las necesidades del negocio en atributos de calidad. Por ejemplo, priorizando atributos según objetivos del negocio, guía en la selección de tácticas arquitectónicas, define estructuras que soporten esos atributos, justifica cada decisión
+y cada elección arquitectónica que se basa en un requisito real, no en intuición.
 
 ## 8. ¿Cuáles son los beneficios de combinar ADD con Clean Architecture en un sistema basado en microservicios?
 ### Ventajas clave:
-✅ Beneficios clave
-1. Diseño alineado a objetivos del negocio
-ADD garantiza que los microservicios estén diseñados con base en atributos de calidad como escalabilidad, disponibilidad o seguridad.
+1. *Diseño alineado a objetivos del negocio:* ADD garantiza que los microservicios estén diseñados con base en atributos de calidad como escalabilidad, disponibilidad o seguridad, mientras que Clean Architecture permite implementar estos servicios de forma clara, desacoplada y sostenible.
 
-Clean Architecture permite implementar estos servicios de forma clara, desacoplada y sostenible.
+2. *Modularidad y responsabilidad clara:* ADD te ayuda a identificar los módulos y límites de los microservicios, y por otro lado, Clean Architecture asegura que cada servicio tenga capas bien definidas (entidades, casos de uso, adaptadores), facilitando mantenimiento y pruebas.
 
-2. Modularidad y responsabilidad clara
-ADD te ayuda a identificar los módulos y límites de los microservicios.
+3. *Alta mantenibilidad y extensibilidad:* Los cambios en reglas de negocio afectan solo la capa central de Clean Architecture. ADD ayuda a prever y preparar el diseño ante posibles cambios o crecimiento del sistema.
 
-Clean Architecture asegura que cada servicio tenga capas bien definidas (entidades, casos de uso, adaptadores), facilitando mantenimiento y pruebas.
+4. *Escalabilidad técnica guiada por necesidades reales:* ADD prioriza atributos como rendimiento o capacidad de crecimiento, guiando decisiones como balanceo, particionado de servicios, cachés, etc. Clean Architecture estructura el código de forma que se puede escalar o migrar con mínimo impacto.
 
-3. Alta mantenibilidad y extensibilidad
-Cambios en reglas de negocio afectan solo la capa central de Clean Architecture.
+5. *Independencia tecnológica:* Clean Architecture desacopla lógica del negocio de frameworks, bases de datos o protocolos. ADD permite tomar decisiones informadas sobre qué tecnologías usar según los atributos de calidad requeridos.
 
-ADD ayuda a prever y preparar el diseño ante posibles cambios o crecimiento del sistema.
+6. *Facilita evolución e innovación:* ADD define desde el inicio cómo se debe comportar el sistema ante cambios. Clean Architecture lo implementa de forma que esos cambios sean fáciles de introducir sin romper la arquitectura.
 
-4. Escalabilidad técnica guiada por necesidades reales
-ADD prioriza atributos como rendimiento o capacidad de crecimiento, guiando decisiones como balanceo, particionado de servicios, cachés, etc.
-
-Clean Architecture estructura el código de forma que se puede escalar o migrar con mínimo impacto.
-
-5. Independencia tecnológica
-Clean Architecture desacopla lógica del negocio de frameworks, bases de datos o protocolos.
-
-ADD permite tomar decisiones informadas sobre qué tecnologías usar según los atributos de calidad requeridos.
-
-6. Facilita evolución e innovación
-ADD define desde el inicio cómo se debe comportar el sistema ante cambios.
-
-Clean Architecture lo implementa de forma que esos cambios sean fáciles de introducir sin romper la arquitectura.
-
-7. Mejor comunicación entre técnicos y stakeholders
-ADD traduce objetivos del negocio en requisitos técnicos.
-
-Clean Architecture los implementa con una estructura que puede ser explicada y entendida fácilmente.
+7. *Mejor comunicación entre técnicos y stakeholders:* ADD traduce objetivos del negocio en requisitos técnicos. Clean Architecture los implementa con una estructura que puede ser explicada y entendida fácilmente.
 
 ## 9. ¿Cómo se asegura que la arquitectura resultante cumpla con los atributos de calidad definidos en ADD?
-1. Escenarios de calidad específicos
-Se definen escenarios concretos por atributo, por ejemplo:
-"El sistema debe responder en menos de 1 segundo para 1000 usuarios concurrentes" → rendimiento
-"Solo usuarios autenticados pueden acceder al historial de órdenes" → seguridad
-Esto permite verificar si el diseño los satisface.
+1. *Escenarios de calidad específicos:* Se definen escenarios concretos por atributo.
 
-2. Tácticas arquitectónicas alineadas a cada atributo
-ADD recomienda tácticas específicas para cumplir los atributos, por ejemplo:
-Rendimiento → caché, concurrencia, compresión.
-Disponibilidad → balanceo de carga, failover.
-Modificabilidad → separación en capas, inyección de dependencias.
+2. *Tácticas arquitectónicas alineadas a cada atributo:* ADD recomienda tácticas específicas para cumplir los atributos.
 
-3. Decisiones arquitectónicas documentadas
-Cada decisión se justifica con su atributo asociado. Esto permite:
-Rastrear por qué se tomó una decisión.
-Validar si sigue vigente al cambiar requisitos.
+3. *Decisiones arquitectónicas documentadas:* Cada decisión se justifica con su atributo asociado, permitiendo rastrear por qué se tomó una decisión y validar si sigue vigente al cambiar requisitos.
 
-4. Validación continua
-Durante el desarrollo se aplican prácticas como:
-Revisión de arquitectura con checklist por atributo.
-Prototipos o pruebas de concepto (spikes) para atributos críticos (como latencia o escalabilidad).
-Pruebas no funcionales: carga, seguridad, resiliencia, etc.
+4. *Validación continua:* Durante el desarrollo se aplican prácticas como revisión de arquitectura con checklist por atributo y prototipos o pruebas de concepto (spikes) para atributos críticos (como latencia o escalabilidad).
 
-5. Trazabilidad entre requerimientos y componentes
-Cada componente del sistema (microservicio, módulo, clase) debe poder rastrearse hasta el atributo de calidad que motivó su existencia o forma.
+5. *Trazabilidad entre requerimientos y componentes:* Cada componente del sistema (microservicio, módulo, clase) debe poder rastrearse hasta el atributo de calidad que motivó su existencia o forma.
 
-6. Monitoreo en producción
-Una vez desplegado, se usa monitoreo para verificar atributos como:
-Tiempos de respuesta.
-Tasa de errores.
-Uso de CPU/memoria.
-Uptime.
-Esto valida que las decisiones siguen cumpliendo los atributos esperados.
+6. *Monitoreo en producción:* Una vez desplegado, se usa monitoreo para verificar atributos como: Tiempos de respuesta, tasa de errores, uso de CPU/memoria validando que las decisiones siguen cumpliendo los atributos esperados.
 
 ## 10. ¿Qué herramientas o metodologías pueden ayudar a validar una arquitectura diseñada con ADD y Clean Architecture?
 ### Herramientas y enfoques útiles:
-1. ATAM (Architecture Tradeoff Analysis Method)
-Metodología formal para evaluar decisiones arquitectónicas en función de atributos de calidad.
+1. *ATAM (Architecture Tradeoff Analysis Method)*: Metodología formal para evaluar decisiones arquitectónicas en función de atributos de calidad.
 
-Identifica riesgos y trade-offs.
-Valida si la arquitectura satisface los atributos definidos con ADD.
-Muy útil antes o durante el desarrollo.
+2. *ADRs (Architecture Decision Records):* Documenta cada decisión arquitectónica con:
 
-2. ADRs (Architecture Decision Records)
-Documenta cada decisión arquitectónica con:
-
-Contexto
-Opción elegida
-Motivación (atributo de calidad relacionado)
-Consecuencias
-Ayuda a validar que cada decisión tiene una razón clara y se puede rastrear.
-
-3. Quality Attribute Scenarios
-ADD los promueve: define escenarios concretos para atributos como rendimiento, disponibilidad o seguridad.
+3. *Quality Attribute Scenarios:* ADD los promueve: define escenarios concretos para atributos como rendimiento, disponibilidad o seguridad.
