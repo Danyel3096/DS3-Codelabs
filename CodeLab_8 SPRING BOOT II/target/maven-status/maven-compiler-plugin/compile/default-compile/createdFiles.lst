@@ -1,0 +1,5 @@
+com\ejemplo\demo\model\Pais.class
+com\ejemplo\demo\service\PaisService.class
+com\ejemplo\demo\repository\PaisRepository.class
+com\ejemplo\demo\DemoApplication.class
+com\ejemplo\demo\controller\PaisController.class
